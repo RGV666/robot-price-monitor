@@ -41,6 +41,32 @@ window.ROBOT_PRICE_DATA = {
   ],
   "products": [
     {
+  id: "example-examplebot",
+  brand: "Example Robotics",
+  model: "ExampleBot",
+  category: "Humanoid",
+  segment: "general-purpose robot",
+  imageUrl: "",
+  productUrl: "https://humanoid.guide/",
+  verifiedAt: "2026-07-07",
+  status: "Published price",
+  confidence: "official page",
+  dayChangePct: 0,
+  sevenDayChangePct: 0,
+  thirtyDayChangePct: 0,
+  historySeed: "flat",
+  offers: [
+    {
+      source: "Official",
+      price: 999,
+      currency: "USD",
+      priceText: "$999",
+      availability: "Published price",
+      url: "https://example.com/examplebot",
+      note: "Official website price"
+    }
+  ]
+},
       "id": "unitree-r1",
       "brand": "Unitree",
       "model": "R1 / R1 AIR",
