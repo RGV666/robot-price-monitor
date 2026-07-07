@@ -1,5 +1,13 @@
 import { readFile, writeFile } from "node:fs/promises";
-
+const sources = [
+  {
+    productId: "example-examplebot",
+    offerSource: "Official",
+    url: "https://humanoid.guide/",
+    currency: "USD",
+    priceRegex: /\$([0-9,]+(?:\.[0-9]{2})?)/
+  }
+];
 const dataPath = new URL("../data.js", import.meta.url);
 const sourceText = await readFile(dataPath, "utf8");
 
