@@ -40,7 +40,7 @@ window.ROBOT_PRICE_DATA = {
     }
   ],
   "products": [
-    {
+    },
      {
       "id": "unitree-r1",
       "brand": "Unitree",
