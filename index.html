@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Robot Price Monitor</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup" aria-label="Robot Price Monitor">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M7 8.5h10a3 3 0 0 1 3 3v4.2a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-4.2a3 3 0 0 1 3-3Z"></path>
+              <path d="M9 8.5V5.7M15 8.5V5.7M8.2 14h.1M15.7 14h.1M9.8 17h4.4"></path>
+            </svg>
+          </span>
+          <div>
+            <h1>Robot Price Monitor</h1>
+            <p id="snapshotLabel">Daily snapshot</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <div class="stat-pill">
+            <span>Coverage</span>
+            <strong id="coverageCount">0 models</strong>
+          </div>
+          <div class="stat-pill">
+            <span>Watchlist</span>
+            <strong id="watchlistCount">0</strong>
+          </div>
+          <button class="icon-button" id="resetButton" title="Reset filters" aria-label="Reset filters">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12a8 8 0 1 0 2.3-5.7M4 5v5h5"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <aside class="filter-rail" aria-label="Filters">
+        <label class="search-box side-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg>
+          <input id="sideSearch" type="search" placeholder="Search robots" autocomplete="off">
+        </label>
+
+        <section class="filter-block">
+          <div class="filter-heading">
+            <span>Category</span>
+          </div>
+          <div id="categoryFilters" class="check-list"></div>
+        </section>
+
+        <section class="filter-block">
+          <div class="filter-heading">
+            <span>Source</span>
+          </div>
+          <div id="sourceFilters" class="check-list"></div>
+        </section>
+
+        <section class="filter-block">
+          <div class="filter-heading">
+            <span>Brand</span>
+          </div>
+          <div id="brandFilters" class="check-list compact-list"></div>
+        </section>
+
+        <section class="filter-block">
+          <div class="filter-heading">
+            <span>Daily change</span>
+          </div>
+          <div class="range-grid">
+            <button class="range-chip active" data-move="all">All</button>
+            <button class="range-chip" data-move="up">Up</button>
+            <button class="range-chip" data-move="down">Down</button>
+          </div>
+        </section>
+
+        <div class="source-note">
+          <strong>Source policy</strong>
+          <p>Official stores are preferred. Marketplaces should use approved APIs or seller feeds before scraping.</p>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <section class="table-toolbar" aria-label="Robot list controls">
+          <label class="search-box main-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <input id="mainSearch" type="search" placeholder="Search model, brand, or source" autocomplete="off">
+          </label>
+          <div class="toolbar-controls">
+            <select id="sortSelect" aria-label="Sort robot list">
+              <option value="movement">Sort: market move</option>
+              <option value="price">Sort: best price</option>
+              <option value="brand">Sort: brand</option>
+              <option value="updated">Sort: newest check</option>
+            </select>
+            <button class="text-button" id="seedModeButton" type="button">Seed mode</button>
+          </div>
+        </section>
+
+        <section class="summary-strip" aria-label="Snapshot summary">
+          <article>
+            <span>Verified retail offers</span>
+            <strong id="verifiedOffers">0</strong>
+          </article>
+          <article>
+            <span>Marketplace connectors</span>
+            <strong id="connectorCount">0</strong>
+          </article>
+          <article>
+            <span>Largest move</span>
+            <strong id="largestMove">0.0%</strong>
+          </article>
+          <article>
+            <span>Price quotes pending</span>
+            <strong id="quoteCount">0</strong>
+          </article>
+        </section>
+
+        <section class="robot-table-frame" aria-label="Tracked robot prices">
+          <div class="table-header table-grid">
+            <span>Robot</span>
+            <span>Brand</span>
+            <span>Model</span>
+            <span>Category</span>
+            <span>Best price</span>
+            <span>Source</span>
+            <span>24h</span>
+            <span>7d</span>
+            <span>30d</span>
+          </div>
+          <div id="robotRows" class="robot-rows"></div>
+          <div class="table-footer">
+            <span id="rowCount">0 models</span>
+            <span id="snapshotTime">Last updated</span>
+          </div>
+        </section>
+      </main>
+
+      <aside class="detail-panel" aria-label="Selected robot detail">
+        <div class="detail-top">
+          <div>
+            <p id="detailCategory" class="detail-kicker">Humanoid</p>
+            <h2 id="detailTitle">Select a robot</h2>
+          </div>
+          <button class="icon-button" id="watchButton" title="Toggle watchlist" aria-label="Toggle watchlist">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 3Z"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="detail-image-wrap">
+          <img id="detailImage" alt="">
+          <div id="detailFallback" class="image-fallback large-fallback" hidden></div>
+        </div>
+        <dl class="detail-meta">
+          <div>
+            <dt>Brand</dt>
+            <dd id="detailBrand">-</dd>
+          </div>
+          <div>
+            <dt>Best price</dt>
+            <dd id="detailPrice">-</dd>
+          </div>
+          <div>
+            <dt>Source</dt>
+            <dd id="detailSource">-</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd id="detailStatus">-</dd>
+          </div>
+        </dl>
+
+        <section class="breakdown-card">
+          <div class="section-title">
+            <h3>Source price breakdown</h3>
+            <span id="detailConfidence">Seed</span>
+          </div>
+          <div class="offer-table">
+            <div class="offer-head">
+              <span>Source</span>
+              <span>Price</span>
+              <span>Stock</span>
+            </div>
+            <div id="offerRows"></div>
+          </div>
+        </section>
+
+        <section class="history-card">
+          <div class="section-title">
+            <h3>Price history</h3>
+            <div class="segment-control" aria-label="Chart range">
+              <button class="active" data-window="30">30d</button>
+              <button data-window="90">90d</button>
+            </div>
+          </div>
+          <canvas id="historyChart" width="520" height="260" aria-label="Price history chart"></canvas>
+          <p id="historyNote" class="history-note">Trend lines use seed history until daily snapshots accumulate.</p>
+        </section>
+      </aside>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
