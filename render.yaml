@@ -2,7 +2,6 @@ services:
   - type: web
     name: robot-price-monitor
     runtime: static
-    rootDir: 09_DASHBOARDS/robot-price-monitor
-    buildCommand: echo "No build needed"
+    buildCommand: ""
     staticPublishPath: .
     autoDeployTrigger: commit
