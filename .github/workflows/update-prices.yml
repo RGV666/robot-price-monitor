@@ -1,0 +1,33 @@
+name: Update robot prices
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 18 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Update price data
+        run: node scripts/update-prices.mjs
+
+      - name: Commit changes if prices changed
+        run: |
+          git config user.name "robot-price-bot"
+          git config user.email "robot-price-bot@users.noreply.github.com"
+          git add data.js
+          git diff --cached --quiet || git commit -m "Update robot price data"
+          git push
