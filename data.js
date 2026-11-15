@@ -1,7 +1,7 @@
 window.ROBOT_PRICE_DATA = {
   "snapshot": {
     "title": "Daily snapshot",
-    "lastUpdated": "2026-11-14T22:09:00.251Z",
+    "lastUpdated": "2026-11-15T22:38:32.095Z",
     "timezone": "Asia/Shanghai",
     "cadence": "Daily",
     "historyMode": "Seed history until observed daily snapshots accumulate. Rows without a public numeric price stay quote-only until an official store, marketplace API, or seller feed returns a price.",
